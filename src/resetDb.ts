@@ -1,4 +1,5 @@
 import db from "./db";
+import { Continent } from "./entities/Continent";
 import { Country } from "./entities/Country"; // Assurez-vous d'importer votre entité Country ici
 
 async function clearDB() {
@@ -18,11 +19,17 @@ async function clearDB() {
     await db.initialize();
     await clearDB();
   
+    const europe = Continent.create({
+        code: "EU",
+        name: "Europe"
+      });
+      await europe.save();
+
     const france = Country.create({
       code: "FR",
       name: "France",
       emoji: "🇫🇷",
-      continent: "Europe"
+      continent: europe
     });
     await france.save();
   
@@ -30,7 +37,7 @@ async function clearDB() {
       code: "DE",
       name: "Germany",
       emoji: "🇩🇪",
-      continent: "Europe"
+      continent: europe
     });
     await germany.save();
   
@@ -38,7 +45,7 @@ async function clearDB() {
       code: "US",
       name: "United States",
       emoji: "🇺🇸",
-      continent: "North America"
+      continent: europe
     });
     await usa.save();
   
@@ -46,7 +53,7 @@ async function clearDB() {
       code: "BR",
       name: "Brazil",
       emoji: "🇧🇷",
-      continent: "South America"
+      continent: europe
     });
     await brazil.save();
   
@@ -54,9 +61,11 @@ async function clearDB() {
       code: "AU",
       name: "Australia",
       emoji: "🇦🇺",
-      continent: "Oceania"
+      continent: europe
     });
     await australia.save();
+
+ 
   
     // Vous pouvez ajouter d'autres pays de la même manière
   }
